@@ -42,5 +42,5 @@ def get_articles():
 if __name__ == "__main__":
     env = Environment(loader=FileSystemLoader("./"))
     template = env.get_template("template.html")
-    with open("hot_article.html", "w") as f:
+    with open("hot_articles.html", "w") as f:
         f.write(template.render(articles=get_articles()))
