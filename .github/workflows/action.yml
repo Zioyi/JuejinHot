@@ -15,7 +15,7 @@ jobs:
       - name: 'prepare'
         run: pip install -r requirements.txt
       - name: 'run bot'
-        run: python bot.py
+        run: python spider.py
       - name: 'Get Date'
         run: echo "REPORT_DATE=$(TZ=':Asia/Shanghai' date '+%Y-%m-%d %T')" >> $GITHUB_ENV
       - name: 'Send mail'
