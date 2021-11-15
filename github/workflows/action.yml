@@ -1,0 +1,32 @@
+name: 'juejinH Bot'
+
+on:
+  push:
+  # 定时每天早上8点40收到推送
+  schedule:
+    - cron: '40 0 * * *'
+
+jobs:
+  bot:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Checkout codes'
+        uses: actions/checkout@v1
+      - name: 'prepare'
+        run: pip install -r requirements.txt
+      - name: 'run bot'
+        run: python bot.py
+      - name: 'Get Date'
+        run: echo "REPORT_DATE=$(TZ=':Asia/Shanghai' date '+%Y-%m-%d %T')" >> $GITHUB_ENV
+      - name: 'Send mail'
+        uses: dawidd6/action-send-mail@master
+        with:
+          server_address: smtp.163.com
+          server_port: 465
+          username: ${{ secrets.MAILUSERNAME }}
+          password: ${{ secrets.MAILPASSWORD }}
+          subject: Hangzhou Weather Report (${{env.REPORT_DATE}})
+          body: file://hot_articles.html
+          to: newsunstudy@163.com
+          from: GitHub Actions
+          content_type: text/html
